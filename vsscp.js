@@ -21,7 +21,7 @@ function activate(context) {
 	var path = require("path");
 	var hostInfo, curFile, curPath, pathMaps;
 
-	let copyOne = vscode.commands.registerCommand('extension.copyOne', function() {
+	let copyOne = vscode.commands.registerCommand('vsscp.copyOne', function() {
 
 		if (config.get('preferredHost').toString()) {
 			hostInfo = config.get('preferredHost').toString().split('@');
@@ -43,13 +43,13 @@ function activate(context) {
 				// vscode.window.showInformationMessage("Copied " + path.basename(curFile));
 				copyFile(hostInfo[0], sshKey, curFile, hostInfo[1], pathMaps[curPath] + '/' + path.basename(curFile));
 			} else {
-				vscode.window.showInformationMessage("curPath not in pathMaps");
+				vscode.window.showInformationMessage("SCP path not configured (" + curPath + ")");
 			}
 		}
 
 	});
 
-	let setHost = vscode.commands.registerCommand('extension.setHost', function() {
+	let setHost = vscode.commands.registerCommand('vsscp.setHost', function() {
 		var availHosts = [];
 		availHosts = config.get('hosts');
 		vscode.window.showQuickPick(availHosts).then(selection => {
@@ -63,7 +63,7 @@ function activate(context) {
 
 	});
 
-	let addHost = vscode.commands.registerCommand('extension.addHost', function() {
+	let addHost = vscode.commands.registerCommand('vsscp.addHost', function() {
 		vscode.window.showInputBox({ prompt: "Enter new scp host (ex. user@host)" }).then(input => {
 			if (!input) {
 				return;
@@ -77,7 +77,7 @@ function activate(context) {
 		});
 	});
 
-	let copyAll = vscode.commands.registerCommand('extension.copyAll', function() {
+	let copyAll = vscode.commands.registerCommand('vsscp.copyAll', function() {
 
 	});
 
@@ -104,7 +104,7 @@ function copyFile(userName, keyPath, srcFile, destHost, destPath) {
 
 		.then(function () {
 			// success
-			vscode.window.showInformationMessage("Copied " + srcFile + " to " + destHost);
+			vscode.window.showInformationMessage("Copied " + path.basename(srcFile) + " to " + destHost + ":" + destPath);
 		},
 			function (error) {
 				// failure

@@ -1,6 +1,7 @@
 {
 	"name": "vsscp",
 	"displayName": "vsscp",
+	"publisher": "NickLucent",
 	"description": "Quickly scp files to remote hosts with path replacement directly from VS Code",
 	"version": "0.0.1",
 	"engines": {
@@ -10,34 +11,34 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.copyOne",
-		"onCommand:extension.addHost",
-		"onCommand:extension.setHost",
-		"onCommand:extension.copyAll"
+		"onCommand:vsscp.copyOne",
+		"onCommand:vsscp.addHost",
+		"onCommand:vsscp.setHost",
+		"onCommand:vsscp.copyAll"
 	],
-	"main": "./extension.js",
+	"main": "./vsscp.js",
 	"contributes": {
 		"keybindings": [
 			{
-				"command": "extension.copyOne",
+				"command": "vsscp.copyOne",
 				"key": "f1"
 			}
 		],
 		"commands": [
 			{
-				"command": "extension.copyOne",
+				"command": "vsscp.copyOne",
 				"title": "SCP current file"
 			},
 			{
-				"command": "extension.copyAll",
+				"command": "vsscp.copyAll",
 				"title": "SCP all open files"
 			},
 			{
-				"command": "extension.addHost",
+				"command": "vsscp.addHost",
 				"title": "SCP add host"
 			},
 			{
-				"command": "extension.setHost",
+				"command": "vsscp.setHost",
 				"title": "SCP set preferred host"
 			}
 		],

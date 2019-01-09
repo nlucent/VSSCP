@@ -108,7 +108,8 @@ function copyFile(userName, keyPath, srcFile, destHost, destPath) {
 		},
 			function (error) {
 				// failure
-				vscode.window.showInformationMessage("Failed copying " + srcFile);
+				vscode.window.showInformationMessage("Failed copying " + srcFile + " to " + destHost);
+				vscode.window.showInformationMessage(error);
 			}
 		);
 }

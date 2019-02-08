@@ -85,16 +85,15 @@
 						"type": "array"
 					},
 					"description": "Local -> Remote path mapping",
-					"default": {
-					},
+					"default": {},
 					"scope": "resource"
 				}
 			}
 		},
-	"scripts": {
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "node ./node_modules/vscode/bin/test"
-	},
+		"scripts": {
+			"postinstall": "node ./node_modules/vscode/bin/install",
+			"test": "node ./node_modules/vscode/bin/test"
+		},
 		"dependencies": {
 			"node-ssh": "^5.1.2"
 		},
@@ -105,5 +104,8 @@
 			"@types/node": "^8.10.25",
 			"@types/mocha": "^2.2.42"
 		}
+	},
+	"dependencies": {
+		"node-ssh": "^5.1.2"
 	}
 }

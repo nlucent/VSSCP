@@ -12,7 +12,6 @@ if (config.get('sshKey')) {
 if (config.get('preferredHost').toString()) {
 	vscode.window.setStatusBarMessage("VSSCP: " + config.get('preferredHost').toString());
 }
-
 /**
  * @param {vscode.ExtensionContext} context
  */

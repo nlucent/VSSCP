@@ -29,7 +29,7 @@ This extension contributes the following settings:
 * `vsscp.hosts`: List of user@host entries to copy remote files
 * `vsscp.pathMap`:  List of local:remote path entries for path substitution
 * `vsscp.preferredHost`: Current selected/default host to receive files
-* `vsscp.privateKey`:  Private SSH key to use to connect to remote systems
+* `vsscp.sshKey`:  Public SSH key to use to connect to remote systems
 
 ## Extension Keybindings
 This extension contributes the following key bindings:

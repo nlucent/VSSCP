@@ -1,112 +1,109 @@
 {
-  "name": "vsscp",
-  "displayName": "vsscp",
-  "publisher": "NickLucent",
-  "description": "Quickly scp files to remote hosts with path replacement directly from VS Code",
-  "version": "0.0.1",
-  "engines": {
-    "vscode": "^1.30.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onCommand:vsscp.copyOne",
-    "onCommand:vsscp.addHost",
-    "onCommand:vsscp.setHost",
-    "onCommand:vsscp.copyAll"
-  ],
-  "main": "./vsscp.js",
-  "contributes": {
-    "keybindings": [
-      {
-        "command": "vsscp.copyOne",
-        "key": "f1"
-      }
-    ],
-    "commands": [
-      {
-        "command": "vsscp.copyOne",
-        "title": "SCP current file"
-      },
-      {
-        "command": "vsscp.copyAll",
-        "title": "SCP all open files"
-      },
-      {
-        "command": "vsscp.addHost",
-        "title": "SCP add host"
-      },
-      {
-        "command": "vsscp.setHost",
-        "title": "SCP set preferred host"
-      }
-    ],
-    "configuration": {
-      "type": "object",
-      "title": "VSSCP",
-      "properties": {
-        "vsscp.hosts": {
-          "type": [
-            "string",
-            "array"
-          ],
-          "items": {
-            "type": [
-              "string",
-              "array"
-            ]
-          },
-          "description": "Destination SCP hosts",
-          "default": [
-            "user@host1",
-            "user@host2"
-          ],
-          "scope": "resource"
-        },
-        "vsscp.privateKey": {
-          "type": "string",
-          "description": "Path to private ssh key",
-          "default": "",
-          "scope": "resource"
-        },
-        "vsscp.preferredHost": {
-          "type": "string",
-          "description": "Preferred host ex. user@host1",
-          "default": "",
-          "scope": "resource"
-        },
-        "vsscp.pathMap": {
-          "type": [
-            "object",
-            "array"
-          ],
-          "items": {
-            "type": "array"
-          },
-          "description": "Local -> Remote path mapping",
-          "default": {
-            "/local/path/1": "/remote/path/1",
-            "/local/path/2": "/remote/path/2"
-          },
-          "scope": "resource"
-        }
-      }
-    },
-    "scripts": {
-      "postinstall": "node ./node_modules/vscode/bin/install",
-      "test": "node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-      "node-ssh": "^5.1.2",
-      "typescript": "^3.1.4",
-      "vscode": "^1.1.25",
-      "tslint": "^5.8.0",
-      "@types/node": "^8.10.25",
-      "@types/mocha": "^2.2.42"
-    }
-  },
-  "dependencies": {
-    "node-ssh": "^5.1.2"
-  }
+	"name": "vsscp",
+	"displayName": "vsscp",
+	"publisher": "NickLucent",
+	"description": "Quickly scp files to remote hosts with path replacement directly from VS Code",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.30.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:vsscp.copyOne",
+		"onCommand:vsscp.addHost",
+		"onCommand:vsscp.setHost",
+		"onCommand:vsscp.copyAll"
+	],
+	"main": "./vsscp.js",
+	"contributes": {
+		"keybindings": [
+			{
+				"command": "vsscp.copyOne",
+				"key": "f1"
+			}
+		],
+		"commands": [
+			{
+				"command": "vsscp.copyOne",
+				"title": "SCP current file"
+			},
+			{
+				"command": "vsscp.copyAll",
+				"title": "SCP all open files"
+			},
+			{
+				"command": "vsscp.addHost",
+				"title": "SCP add host"
+			},
+			{
+				"command": "vsscp.setHost",
+				"title": "SCP set preferred host"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "VSSCP",
+			"properties": {
+				"vsscp.hosts": {
+					"type": [
+						"string",
+						"array"
+					],
+					"items": {
+						"type": [
+							"string",
+							"array"
+						]
+					},
+					"description": "Destination SCP hosts",
+					"default": [
+						"user@host1",
+						"user@host2"
+					],
+					"scope": "resource"
+				},
+				"vsscp.sshKey": {
+					"type": "string",
+					"description": "Path to private ssh key",
+					"default": "",
+					"scope": "resource"
+				},
+				"vsscp.preferredHost": {
+					"type": "string",
+					"description": "Preferred host ex. user@host1",
+					"default": "",
+					"scope": "resource"
+				},
+				"vsscp.pathMap": {
+					"type": [
+						"object",
+						"array"
+					],
+					"items": {
+						"type": "array"
+					},
+					"description": "Local -> Remote path mapping",
+					"default": {
+					},
+					"scope": "resource"
+				}
+			}
+		},
+	"scripts": {
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "node ./node_modules/vscode/bin/test"
+	},
+		"dependencies": {
+			"node-ssh": "^5.1.2"
+		},
+		"devDependencies": {
+			"typescript": "^3.1.4",
+			"vscode": "^1.1.25",
+			"tslint": "^5.8.0",
+			"@types/node": "^8.10.25",
+			"@types/mocha": "^2.2.42"
+		}
+	}
 }

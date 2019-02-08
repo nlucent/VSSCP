@@ -3,10 +3,10 @@ const vscode = require('vscode');
 var node_ssh = require('node-ssh');
 
 var ssh = new node_ssh();
-const config = vscode.workspace.getConfiguration('vsscp',null,vscode.Global);
+const config = vscode.workspace.getConfiguration('vsscp', null, vscode.Global);
 
-if (config.get('privateKey')) {
-	var sshKey = config.get('privateKey').toString();
+if (config.get('sshKey')) {
+	var sshKey = config.get('sshKey').toString();
 }
 
 if (config.get('preferredHost').toString()) {
@@ -18,10 +18,8 @@ if (config.get('preferredHost').toString()) {
  */
 function activate(context) {
 
-	var path = require("path");
 	var hostInfo, curFile, curPath, pathMaps;
-
-	let copyOne = vscode.commands.registerCommand('vsscp.copyOne', function() {
+	let copyOne = vscode.commands.registerCommand('vsscp.copyOne', function () {
 
 		if (config.get('preferredHost').toString()) {
 			hostInfo = config.get('preferredHost').toString().split('@');
@@ -33,23 +31,19 @@ function activate(context) {
 		curFile = vscode.window.activeTextEditor.document.fileName;
 
 		if (curFile) {
-			curPath = path.dirname(curFile);
-		}
-
-		pathMaps = config.get('pathMap');
-
-		if (pathMaps) {
-			if (pathMaps[curPath]) {
-				// vscode.window.showInformationMessage("Copied " + path.basename(curFile));
-				copyFile(hostInfo[0], sshKey, curFile, hostInfo[1], pathMaps[curPath] + '/' + path.basename(curFile));
-			} else {
-				vscode.window.showInformationMessage("SCP path not configured (" + curPath + ")");
+			pathMaps = config.get('pathMap');
+			if (pathMaps) {
+				for (var key in pathMaps) {
+					if (curFile.startsWith(key) === true) {
+						copyFile(hostInfo[0], sshKey, curFile, hostInfo[1], pathMaps[key] + curFile.slice(key.length));
+					}
+				}
 			}
 		}
 
 	});
 
-	let setHost = vscode.commands.registerCommand('vsscp.setHost', function() {
+	let setHost = vscode.commands.registerCommand('vsscp.setHost', function () {
 		var availHosts = [];
 		availHosts = config.get('hosts');
 		vscode.window.showQuickPick(availHosts).then(selection => {
@@ -63,7 +57,7 @@ function activate(context) {
 
 	});
 
-	let addHost = vscode.commands.registerCommand('vsscp.addHost', function() {
+	let addHost = vscode.commands.registerCommand('vsscp.addHost', function () {
 		vscode.window.showInputBox({ prompt: "Enter new scp host (ex. user@host)" }).then(input => {
 			if (!input) {
 				return;
@@ -77,7 +71,7 @@ function activate(context) {
 		});
 	});
 
-	let copyAll = vscode.commands.registerCommand('vsscp.copyAll', function() {
+	let copyAll = vscode.commands.registerCommand('vsscp.copyAll', function () {
 
 	});
 
@@ -88,10 +82,11 @@ function activate(context) {
 }
 exports.activate = activate;
 
-// this method is called when your extension is deactivated
-function deactivate() {}
+function deactivate() { }
 
 function copyFile(userName, keyPath, srcFile, destHost, destPath) {
+	var path = require("path");
+
 	ssh.connect({
 		host: destHost,
 		username: userName,
@@ -100,18 +95,14 @@ function copyFile(userName, keyPath, srcFile, destHost, destPath) {
 
 		.then(function () {
 			ssh.putFile(srcFile, destPath);
+			vscode.window.showInformationMessage("Copied " + path.basename(srcFile) + " to " + destHost + ":" + destPath);
 		})
 
-		.then(function () {
-			// success
-			vscode.window.showInformationMessage("Copied " + path.basename(srcFile) + " to " + destHost + ":" + destPath);
-		},
-			function (error) {
-				// failure
-				vscode.window.showInformationMessage("Failed copying " + srcFile + " to " + destHost);
-				vscode.window.showInformationMessage(error);
-			}
-		);
+		.then(undefined, err => {
+			// failure
+			vscode.window.showInformationMessage("Failed copying " + srcFile);
+			console.error(err)
+		});
 }
 
 module.exports = {
